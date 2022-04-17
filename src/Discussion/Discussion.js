@@ -1,33 +1,47 @@
-import axios from "axios";
+import http from "../Services/httpServices";
 import { useEffect, useState } from "react";
 import Comments from "../Components/Comments/Comments";
 import FullComment from "../Components/FullComment/FullComment";
 import NewComment from "../Components/NewComment/NewComment";
 import styles from "./Discussion.module.css";
+import { getAllCommentServises } from "../Services/getAllCommentServises";
+
 const Discussion = () => {
   const [comments, setComments] = useState(null);
-  const[commentId,setCommentId]=useState(null);
+  const [commentId, setCommentId] = useState(null);
   useEffect(() => {
-    axios
-      .get("http://localhost:3001/comments")
+    getAllCommentServises()
       .then((res) => setComments(res.data))
       .catch((err) => console.log(err));
   }, []);
-  const clickHandler=(id)=>{
-setCommentId(id);
-  }
+  const clickHandler = (id) => {
+    setCommentId(id);
+  };
   return (
     <section className={styles.container}>
       <h2>Http Request</h2>
       <div>
-      {comments ?
-comments.map((c)=>{
-return <Comments  key={c.id} name={c.name} email={c.email} onClick={()=>clickHandler(c.id)}/>
-}): <p>loading.....</p>}
+        {comments ? (
+          comments.map((c) => {
+            return (
+              <Comments
+                key={c.id}
+                name={c.name}
+                email={c.email}
+                onClick={() => clickHandler(c.id)}
+              />
+            );
+          })
+        ) : (
+          <p>loading.....</p>
+        )}
       </div>
 
-      
-      <FullComment commentId={commentId} setComments={setComments} setCommentId={setCommentId}/>
+      <FullComment
+        commentId={commentId}
+        setComments={setComments}
+        setCommentId={setCommentId}
+      />
       <NewComment setComments={setComments} />
     </section>
   );

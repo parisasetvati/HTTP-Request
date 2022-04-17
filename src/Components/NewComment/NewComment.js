@@ -1,6 +1,8 @@
-import axios from "axios";
+import http from "../../Services/httpServices";
 import { useState } from "react";
 import styles from "./NewComment.module.css";
+import { getAllCommentServises } from "../../Services/getAllCommentServises";
+import { addNewComment } from "../../Services/addNewComent";
 const NewComment = ({ setComments }) => {
   const [newComment, setNewComment] = useState({
     name: "",
@@ -12,14 +14,9 @@ const NewComment = ({ setComments }) => {
     setNewComment({ ...newComment, [e.target.name]: e.target.value });
   };
   const addCommentHandler = () => {
-    axios
-      .post("http://localhost:3001/comments", {
-        ...newComment,
-        postId: 10,
-      })
+    addNewComment({...newComment,postId:10})
       .then((res) => {
-        axios
-          .get("http://localhost:3001/comments")
+        getAllCommentServises()
           .then((res) => setComments(res.data));
       })
       .catch();

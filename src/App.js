@@ -1,12 +1,10 @@
-import logo from './logo.svg';
-import './App.css';
-import Discussion from './Discussion/Discussion';
+import "./App.css";
+import Discussion from "./Discussion/Discussion";
 
 function App() {
   return (
     <div>
-      
-      <Discussion/>
+      <Discussion />
     </div>
   );
 }
